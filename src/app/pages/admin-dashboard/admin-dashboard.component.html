@@ -1,0 +1,98 @@
+<section class="dashboard">
+  <header class="panel heading">
+    <div>
+      <p class="eyebrow">Vista Administrador</p>
+      <h2>Operacion global de usuarios, apps e ingresos</h2>
+    </div>
+  </header>
+
+  <section class="kpis">
+    <article class="panel kpi">
+      <p>Usuarios</p>
+      <strong>{{ overview().activeUsers }}/{{ overview().totalUsers }}</strong>
+      <small>Activos sobre total</small>
+    </article>
+    <article class="panel kpi">
+      <p>Apps en plataforma</p>
+      <strong>{{ overview().activeApps }}/{{ overview().totalApps }}</strong>
+      <small>No archivadas</small>
+    </article>
+    <article class="panel kpi">
+      <p>Despliegues del mes</p>
+      <strong>{{ overview().deploymentsThisMonth }}</strong>
+      <small>Produccion y staging</small>
+    </article>
+    <article class="panel kpi">
+      <p>Ingreso mensual</p>
+      <strong>{{ overview().monthlyRevenue | currency:'USD':'symbol':'1.0-0' }}</strong>
+      <small>Suscripciones activas</small>
+    </article>
+  </section>
+
+  <section class="grid">
+    <article class="panel">
+      <h3>Ganancias por suscripcion</h3>
+      <ul class="plan-list">
+        @for (plan of revenueByPlan(); track plan.plan) {
+          <li>
+            <div class="row">
+              <p>{{ plan.plan }}</p>
+              <strong>{{ plan.revenue | currency:'USD':'symbol':'1.0-0' }}</strong>
+            </div>
+            <div class="bar">
+              <span [style.width.%]="plan.share * 100"></span>
+            </div>
+            <small>{{ plan.share | percent:'1.0-0' }} del total</small>
+          </li>
+        }
+      </ul>
+    </article>
+
+    <article class="panel">
+      <h3>Despliegues recientes</h3>
+      <ul class="deploy-list">
+        @for (deployment of recentDeployments(); track deployment.id) {
+          <li>
+            <div>
+              <p>{{ appName(deployment.appId) }}</p>
+              <small>{{ userName(deployment.userId) }} · {{ deployment.timestamp | date:'short' }}</small>
+            </div>
+            <span class="pill">{{ deployment.status }}</span>
+          </li>
+        }
+      </ul>
+    </article>
+  </section>
+
+  <article class="panel table-panel">
+    <h3>Rendimiento por usuario</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Plan</th>
+            <th>Estado</th>
+            <th>Apps</th>
+            <th>Deploys</th>
+            <th>Exito</th>
+            <th>Ingreso mensual</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of performanceRows(); track row.userId) {
+            <tr>
+              <td>{{ row.name }}</td>
+              <td>{{ row.plan }}</td>
+              <td>{{ row.status }}</td>
+              <td>{{ row.apps }}</td>
+              <td>{{ row.deployments }}</td>
+              <td>{{ row.successRate | percent:'1.0-0' }}</td>
+              <td>{{ row.monthlyRevenue | currency:'USD':'symbol':'1.0-0' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </article>
+</section>

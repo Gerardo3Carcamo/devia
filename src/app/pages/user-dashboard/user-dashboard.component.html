@@ -1,0 +1,118 @@
+<section class="dashboard">
+  <header class="panel heading">
+    <div>
+      <p class="eyebrow">Vista Cliente</p>
+      <h2>Perfil, apps y despliegues por usuario</h2>
+    </div>
+
+    <label class="user-select">
+      <span>Usuario</span>
+      <select [value]="selectedUserId()" (change)="onUserChange($event)">
+        @for (user of users; track user.id) {
+          <option [value]="user.id">{{ user.name }}</option>
+        }
+      </select>
+    </label>
+  </header>
+
+  @if (selectedUser(); as user) {
+    <section class="grid">
+      <article class="panel profile">
+        <div class="avatar">{{ user.avatarInitial }}</div>
+        <div>
+          <h3>{{ user.name }}</h3>
+          <p>{{ user.role }} · {{ user.location }}</p>
+          <small>{{ user.email }}</small>
+        </div>
+        <div class="meta">
+          <span class="tag">{{ user.plan }}</span>
+          <span [class]="'status status-' + user.status.toLowerCase()">{{ user.status }}</span>
+        </div>
+      </article>
+
+      <article class="panel stat-card">
+        <p>Apps registradas</p>
+        <strong>{{ userApps().length }}</strong>
+      </article>
+
+      <article class="panel stat-card">
+        <p>Despliegues</p>
+        <strong>{{ userDeployments().length }}</strong>
+        <small>{{ successRate() | percent:'1.0-0' }} exitosos</small>
+      </article>
+
+      <article class="panel stat-card">
+        <p>Ingreso mensual</p>
+        <strong>{{ monthlyRevenue() | currency:'USD':'symbol':'1.0-0' }}</strong>
+      </article>
+    </section>
+
+    <section class="detail-grid">
+      <article class="panel">
+        <h3>Apps por usuario</h3>
+        <ul class="list">
+          @for (app of userApps(); track app.id) {
+            <li>
+              <div>
+                <p>{{ app.name }}</p>
+                <small>{{ app.type }}</small>
+              </div>
+              <div class="right">
+                <span class="tag">{{ app.status }}</span>
+                <small>{{ app.lastUpdate | date:'mediumDate' }}</small>
+              </div>
+            </li>
+          } @empty {
+            <li class="empty">No hay apps para este usuario.</li>
+          }
+        </ul>
+      </article>
+
+      <article class="panel">
+        <h3>Despliegues realizados</h3>
+        <ul class="list">
+          @for (deployment of userDeployments(); track deployment.id) {
+            <li>
+              <div>
+                <p>{{ appById(deployment.appId)?.name ?? 'App' }}</p>
+                <small>{{ deployment.environment }} · {{ deployment.timestamp | date:'short' }}</small>
+              </div>
+              <div class="right">
+                <span class="tag">{{ deployment.status }}</span>
+                <small>
+                  @if (deployment.durationSeconds > 0) {
+                    {{ deployment.durationSeconds }}s
+                  } @else {
+                    Pendiente
+                  }
+                </small>
+              </div>
+            </li>
+          } @empty {
+            <li class="empty">Sin despliegues registrados.</li>
+          }
+        </ul>
+      </article>
+
+      <article class="panel full">
+        <h3>Ganancias por suscripcion</h3>
+        <ul class="list">
+          @for (subscription of userSubscriptions(); track subscription.id) {
+            <li>
+              <div>
+                <p>Plan {{ subscription.plan }}</p>
+                <small>Inicio {{ subscription.startedAt | date:'mediumDate' }}</small>
+              </div>
+              <div class="right">
+                <span class="tag">{{ subscription.status }}</span>
+                <strong>{{ subscription.priceMonthly | currency:'USD':'symbol':'1.0-0' }}/mes</strong>
+              </div>
+            </li>
+          } @empty {
+            <li class="empty">No hay suscripciones activas.</li>
+          }
+        </ul>
+      </article>
+    </section>
+  }
+</section>
