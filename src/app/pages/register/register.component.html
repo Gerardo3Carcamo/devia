@@ -1,0 +1,39 @@
+<section class="auth-page">
+  <article class="auth-card">
+    <p class="eyebrow">Onboarding</p>
+    <h1>Crear cuenta</h1>
+    <p class="subtitle">Registra tu negocio y empieza a generar apps con IA.</p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <label for="name">Nombre completo</label>
+      <input id="name" type="text" formControlName="name" placeholder="Tu nombre" />
+
+      <label for="location">Ubicacion</label>
+      <input id="location" type="text" formControlName="location" placeholder="Monterrey, MX" />
+
+      <label for="plan">Plan</label>
+      <select id="plan" formControlName="plan">
+        @for (option of planOptions; track option.plan) {
+          <option [value]="option.plan">{{ option.plan }} - {{ option.price | currency:'USD':'symbol':'1.0-0' }}/mes</option>
+        }
+      </select>
+
+      <label for="email">Correo</label>
+      <input id="email" type="email" formControlName="email" placeholder="tu@empresa.com" />
+
+      <label for="password">Contrasena</label>
+      <input id="password" type="password" formControlName="password" placeholder="Minimo 8 caracteres" />
+
+      <label for="confirmPassword">Confirmar contrasena</label>
+      <input id="confirmPassword" type="password" formControlName="confirmPassword" placeholder="Repite la contrasena" />
+
+      @if (errorMessage()) {
+        <p class="alert">{{ errorMessage() }}</p>
+      }
+
+      <button type="submit" [disabled]="isSubmitting()">Crear cuenta</button>
+    </form>
+
+    <p class="helper">Ya tienes cuenta? <a routerLink="/login">Iniciar sesion</a></p>
+  </article>
+</section>

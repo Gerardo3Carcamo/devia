@@ -1,0 +1,127 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+}
+
+.auth-page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background:
+    radial-gradient(circle at 14% 12%, rgba(45, 212, 191, 0.18), transparent 38%),
+    radial-gradient(circle at 88% 80%, rgba(14, 165, 233, 0.2), transparent 34%),
+    linear-gradient(145deg, #090f1d 0%, #0c1426 100%);
+}
+
+.auth-card {
+  width: min(460px, 100%);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 22px;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  background: rgba(11, 18, 33, 0.78);
+  box-shadow: 0 28px 70px -45px rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(8px);
+}
+
+.eyebrow {
+  margin: 0;
+  color: #8ea0bd;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+}
+
+h1 {
+  margin: 0.34rem 0 0;
+  color: #eff6ff;
+  font-size: 1.55rem;
+}
+
+.subtitle {
+  margin: 0.45rem 0 0;
+  color: #9db1ce;
+  font-size: 0.9rem;
+}
+
+form {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.54rem;
+}
+
+label {
+  color: #a6b7d1;
+  font-size: 0.8rem;
+}
+
+input {
+  border: 1px solid rgba(148, 163, 184, 0.34);
+  border-radius: 11px;
+  padding: 0.62rem 0.7rem;
+  background: rgba(9, 14, 27, 0.92);
+  color: #e8f0ff;
+}
+
+input:focus-visible {
+  outline: 2px solid rgba(45, 212, 191, 0.45);
+  border-color: rgba(45, 212, 191, 0.45);
+}
+
+.error {
+  margin: 0;
+  color: #fca5a5;
+  font-size: 0.75rem;
+}
+
+.alert {
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  border-radius: 11px;
+  padding: 0.55rem 0.65rem;
+  background: rgba(127, 29, 29, 0.22);
+  color: #fecaca;
+  font-size: 0.82rem;
+}
+
+button {
+  margin-top: 0.26rem;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.65rem 0.85rem;
+  background: linear-gradient(140deg, #14b8a6, #0ea5e9);
+  color: #ecfeff;
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.helper {
+  margin-top: 1rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+  padding-top: 0.85rem;
+}
+
+.helper p {
+  margin: 0.2rem 0;
+  color: #91a4c0;
+  font-size: 0.78rem;
+}
+
+.helper strong {
+  color: #d8eaff;
+  font-weight: 600;
+}
+
+a {
+  color: #7ae8dd;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
