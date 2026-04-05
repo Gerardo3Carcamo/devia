@@ -1,0 +1,31 @@
+<div class="shell">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">D</span>
+      <div>
+        <p class="eyebrow">LLM Builder Platform</p>
+        <h1>Devia Control Center</h1>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a routerLink="/usuarios" routerLinkActive="is-active">Vista Usuario</a>
+      <a routerLink="/admin" routerLinkActive="is-active">Dashboard Admin</a>
+    </nav>
+
+    <div class="quick-metrics">
+      <article>
+        <span>Usuarios activos</span>
+        <strong>{{ overview().activeUsers }}/{{ overview().totalUsers }}</strong>
+      </article>
+      <article>
+        <span>Ingreso mensual</span>
+        <strong>{{ overview().monthlyRevenue | currency:'USD':'symbol':'1.0-0' }}</strong>
+      </article>
+    </div>
+  </header>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

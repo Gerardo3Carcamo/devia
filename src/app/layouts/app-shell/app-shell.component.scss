@@ -1,0 +1,127 @@
+:host {
+  display: block;
+}
+
+.shell {
+  min-height: 100dvh;
+  padding: clamp(1rem, 2vw, 1.8rem);
+  background:
+    radial-gradient(circle at 90% 5%, rgba(34, 211, 238, 0.12), transparent 30%),
+    radial-gradient(circle at 10% 92%, rgba(16, 185, 129, 0.13), transparent 28%),
+    linear-gradient(145deg, #090f1d 0%, #0c1426 100%);
+}
+
+.topbar {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 22px;
+  padding: clamp(0.9rem, 2vw, 1.2rem);
+  background: rgba(11, 18, 33, 0.75);
+  box-shadow: 0 28px 70px -42px rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-width: 240px;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #edfcff;
+  background: linear-gradient(140deg, #14b8a6, #0ea5e9);
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8ea0bd;
+  font-size: 0.73rem;
+}
+
+h1 {
+  margin: 0.2rem 0 0;
+  color: #ecf4ff;
+  font-size: 1.08rem;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.nav a {
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 999px;
+  padding: 0.52rem 0.85rem;
+  color: #b8c6dc;
+  font-size: 0.84rem;
+  text-decoration: none;
+  transition: all 180ms ease;
+}
+
+.nav a:hover {
+  color: #ecf4ff;
+  border-color: rgba(45, 212, 191, 0.5);
+}
+
+.nav a.is-active {
+  color: #f3ffff;
+  border-color: rgba(45, 212, 191, 0.6);
+  background: rgba(45, 212, 191, 0.16);
+}
+
+.quick-metrics {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.65rem;
+}
+
+.quick-metrics article {
+  min-width: 140px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 14px;
+  background: rgba(9, 14, 27, 0.8);
+  padding: 0.6rem 0.72rem;
+}
+
+.quick-metrics span {
+  display: block;
+  color: #8ea0bd;
+  font-size: 0.76rem;
+}
+
+.quick-metrics strong {
+  display: block;
+  margin-top: 0.22rem;
+  color: #f2f7ff;
+  font-size: 0.95rem;
+}
+
+.content {
+  margin-top: clamp(1rem, 2vw, 1.2rem);
+}
+
+@media (max-width: 1060px) {
+  .topbar {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-metrics {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}
