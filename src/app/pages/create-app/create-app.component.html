@@ -1,0 +1,95 @@
+<section class="create-app-page">
+  <header class="hero panel">
+    <div>
+      <p class="eyebrow">Nuevo proyecto</p>
+      <h2>Crea una app desde cero</h2>
+      <p class="subtitle">Define la base de tu app y agrega instrucciones de personalizacion para tu siguiente flujo LLM.</p>
+    </div>
+    <a routerLink="/usuarios">Volver al dashboard</a>
+  </header>
+
+  <section class="layout">
+    <article class="panel form-panel">
+      <header class="heading">
+        <p class="eyebrow">Configuracion inicial</p>
+        <h3>Crear app</h3>
+      </header>
+
+      @if (isAdmin()) {
+        <p class="notice">Esta vista esta pensada para cuentas de usuario.</p>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <label>
+          <span>Nombre de la app</span>
+          <input type="text" formControlName="name" placeholder="Ej: Mi CRM" />
+        </label>
+
+        <div class="field-row">
+          <label>
+            <span>Tipo de app</span>
+            <input type="text" formControlName="type" placeholder="Ej: Ventas y clientes" />
+          </label>
+
+          <label>
+            <span>Estado inicial</span>
+            <select formControlName="status">
+              @for (status of appStatusOptions; track status) {
+                <option [value]="status">{{ status }}</option>
+              }
+            </select>
+          </label>
+        </div>
+
+        <label>
+          <div class="textarea-label">
+            <span>Personalizacion de la app</span>
+            <small>{{ customizationLength }}/1200</small>
+          </div>
+          <textarea
+            formControlName="customizationPrompt"
+            placeholder="Ejemplo: quiero login con Google, tablero de indicadores semanales y modulo de reportes PDF."
+          ></textarea>
+        </label>
+
+        @if (createErrorMessage()) {
+          <p class="error">{{ createErrorMessage() }}</p>
+        }
+
+        @if (createSuccessMessage()) {
+          <p class="success">{{ createSuccessMessage() }}</p>
+        }
+
+        <button type="submit" [disabled]="isCreating() || isAdmin()">
+          @if (isCreating()) {
+            Creando...
+          } @else {
+            Crear app
+          }
+        </button>
+      </form>
+    </article>
+
+    <aside class="panel side-panel">
+      <div>
+        <p class="eyebrow">Prompts rapidos</p>
+        <h3>Ideas para personalizar</h3>
+      </div>
+
+      <p class="tip">Toca una sugerencia para insertarla en el textarea y ajustar rapidamente el alcance.</p>
+
+      <div class="template-list">
+        @for (template of promptTemplates; track template) {
+          <button type="button" (click)="useTemplate(template)">
+            {{ template }}
+          </button>
+        }
+      </div>
+
+      <div class="hint-card">
+        <p class="eyebrow">Tip</p>
+        <p>Mientras mas contexto pongas en personalizacion, mas precisa sera la primera version de tu app cuando se active LLM.</p>
+      </div>
+    </aside>
+  </section>
+</section>
