@@ -1,4 +1,16 @@
 <section class="dashboard">
+  @if (isLoading()) {
+    <article class="panel">
+      <p>Cargando metricas...</p>
+    </article>
+  }
+
+  @if (errorMessage()) {
+    <article class="panel">
+      <p>{{ errorMessage() }}</p>
+    </article>
+  }
+
   <header class="panel heading">
     <div>
       <p class="eyebrow">Vista Administrador</p>
@@ -54,10 +66,10 @@
         @for (deployment of recentDeployments(); track deployment.id) {
           <li>
             <div>
-              <p>{{ appName(deployment.appId) }}</p>
-              <small>{{ userName(deployment.userId) }} · {{ deployment.timestamp | date:'short' }}</small>
+              <p>{{ deployment.appName }}</p>
+              <small>{{ userName(deployment.userId) }} · {{ deployment.timestampUtc | date:'short' }}</small>
             </div>
-            <span class="pill">{{ deployment.status }}</span>
+            <span class="pill">{{ deploymentStatusLabel(deployment.status) }}</span>
           </li>
         }
       </ul>

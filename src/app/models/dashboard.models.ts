@@ -4,7 +4,7 @@ export type UserStatus = 'Activo' | 'Prueba' | 'Inactivo';
 
 export type AppStatus = 'Produccion' | 'Beta' | 'Mantenimiento' | 'Archivada';
 
-export type DeploymentStatus = 'Exitoso' | 'Fallido' | 'En cola';
+export type DeploymentStatus = 'Exitoso' | 'Fallido' | 'EnCola';
 
 export type DeploymentEnvironment = 'Produccion' | 'Staging';
 
@@ -18,7 +18,7 @@ export interface UserProfile {
   location: string;
   plan: PlanTier;
   status: UserStatus;
-  joinedAt: string;
+  joinedAtUtc: string;
   avatarInitial: string;
 }
 
@@ -28,17 +28,18 @@ export interface UserApp {
   name: string;
   type: string;
   status: AppStatus;
-  createdAt: string;
-  lastUpdate: string;
+  createdAtUtc: string;
+  lastUpdateUtc: string;
 }
 
 export interface DeploymentRecord {
   id: string;
   userId: string;
   appId: string;
+  appName: string;
   environment: DeploymentEnvironment;
   status: DeploymentStatus;
-  timestamp: string;
+  timestampUtc: string;
   durationSeconds: number;
 }
 
@@ -47,7 +48,7 @@ export interface SubscriptionRecord {
   userId: string;
   plan: PlanTier;
   priceMonthly: number;
-  startedAt: string;
+  startedAtUtc: string;
   status: SubscriptionStatus;
 }
 
@@ -75,4 +76,13 @@ export interface UserPerformanceRow {
   deployments: number;
   successRate: number;
   monthlyRevenue: number;
+}
+
+export interface UserDashboardData {
+  profile: UserProfile;
+  apps: UserApp[];
+  deployments: DeploymentRecord[];
+  subscriptions: SubscriptionRecord[];
+  monthlyRevenue: number;
+  successRate: number;
 }

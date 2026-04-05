@@ -10,18 +10,30 @@
 
     <nav class="nav">
       <a routerLink="/usuarios" routerLinkActive="is-active">Vista Usuario</a>
-      <a routerLink="/admin" routerLinkActive="is-active">Dashboard Admin</a>
+      @if (!isAdmin()) {
+        <a routerLink="/crear-app" routerLinkActive="is-active">Crear app</a>
+      }
+      @if (isAdmin()) {
+        <a routerLink="/admin" routerLinkActive="is-active">Dashboard Admin</a>
+      }
     </nav>
 
-    <div class="quick-metrics">
+    <div class="quick-metrics" aria-label="metricas">
       <article>
-        <span>Usuarios activos</span>
-        <strong>{{ overview().activeUsers }}/{{ overview().totalUsers }}</strong>
+        <span>{{ primaryMetricLabel() }}</span>
+        <strong>{{ primaryMetricValue() }}</strong>
       </article>
       <article>
-        <span>Ingreso mensual</span>
-        <strong>{{ overview().monthlyRevenue | currency:'USD':'symbol':'1.0-0' }}</strong>
+        <span>{{ secondaryMetricLabel() }}</span>
+        <strong>{{ secondaryMetricValue() }}</strong>
       </article>
+    </div>
+
+    <div class="account">
+      @if (session(); as activeSession) {
+        <p>{{ activeSession.name }} · {{ activeSession.role }}</p>
+      }
+      <button type="button" (click)="logout()">Cerrar sesion</button>
     </div>
   </header>
 

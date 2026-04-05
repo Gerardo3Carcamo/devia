@@ -5,14 +5,16 @@
       <h2>Perfil, apps y despliegues por usuario</h2>
     </div>
 
-    <label class="user-select">
-      <span>Usuario</span>
-      <select [value]="selectedUserId()" (change)="onUserChange($event)">
-        @for (user of users; track user.id) {
-          <option [value]="user.id">{{ user.name }}</option>
-        }
-      </select>
-    </label>
+    @if (isAdmin()) {
+      <label class="user-select">
+        <span>Usuario</span>
+        <select [value]="selectedUserId()" (change)="onUserChange($event)">
+          @for (user of users(); track user.id) {
+            <option [value]="user.id">{{ user.name }}</option>
+          }
+        </select>
+      </label>
+    }
   </header>
 
   @if (selectedUser(); as user) {
@@ -59,7 +61,7 @@
               </div>
               <div class="right">
                 <span class="tag">{{ app.status }}</span>
-                <small>{{ app.lastUpdate | date:'mediumDate' }}</small>
+                <small>{{ app.lastUpdateUtc | date:'mediumDate' }}</small>
               </div>
             </li>
           } @empty {
@@ -74,11 +76,11 @@
           @for (deployment of userDeployments(); track deployment.id) {
             <li>
               <div>
-                <p>{{ appById(deployment.appId)?.name ?? 'App' }}</p>
-                <small>{{ deployment.environment }} · {{ deployment.timestamp | date:'short' }}</small>
+                <p>{{ deployment.appName }}</p>
+                <small>{{ deployment.environment }} · {{ deployment.timestampUtc | date:'short' }}</small>
               </div>
               <div class="right">
-                <span class="tag">{{ deployment.status }}</span>
+                <span class="tag">{{ deploymentStatusLabel(deployment.status) }}</span>
                 <small>
                   @if (deployment.durationSeconds > 0) {
                     {{ deployment.durationSeconds }}s
@@ -101,7 +103,7 @@
             <li>
               <div>
                 <p>Plan {{ subscription.plan }}</p>
-                <small>Inicio {{ subscription.startedAt | date:'mediumDate' }}</small>
+                <small>Inicio {{ subscription.startedAtUtc | date:'mediumDate' }}</small>
               </div>
               <div class="right">
                 <span class="tag">{{ subscription.status }}</span>
@@ -114,5 +116,15 @@
         </ul>
       </article>
     </section>
+  } @else {
+    <article class="panel">
+      @if (isLoading()) {
+        <p class="empty-state">Cargando dashboard...</p>
+      } @else if (errorMessage()) {
+        <p class="empty-state">{{ errorMessage() }}</p>
+      } @else {
+        <p class="empty-state">No hay un usuario activo para mostrar.</p>
+      }
+    </article>
   }
 </section>
